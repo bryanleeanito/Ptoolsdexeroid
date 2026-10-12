@@ -1,0 +1,93 @@
+# IDEE.txt — Backlog Pengembangan OSINT by kzldx
+# (catatan kzldx + agent; tandai [x] bila sudah)
+
+## v2.0 (SELESAI — 4 Okt 2026 malam)
+[x] Menu interaktif (default tanpa argumen) — tanpa hafal -command
+[x] sublive — probe HTTP paralel semua subdomain (status/title/server)
+[x] techstack — 24 signature (CMS/framework/waf/panel) + cookie/header/versi
+[x] vuln — nuclei wrapper (mode cepat/penuh, rate 3/dtk, socks5)
+[x] celah — sapuan 48 path sensitif + baseline soft-404 + verdict
+[x] tools submenu — hydra (anti-lockout) / msf / sqlmap / whatweb
+[x] output pindah ke folder "Osint by kzldx/output/" (per invokasi)
+[x] footgun: nmap -F via Tor macet → kurasi 30 port + pc_nmap.conf
+[x] UI animasi (5 Okt): banner ASCII gradient mesin-ketik + boot checklist OK/FAIL
+    + panel TARGET/MENU (box rounded) + sweep progress ▰▱ sebelum eksekusi + prompt ❯
+    (--quiet / non-tty → otomatis plain)
+[x] vuln --list auto: multi-target (nuclei -l sublive.txt, semua host divalidasi scope)
+[x] jsfind — endpoint + rahasia hardcoded dari file JS (17)
+[x] shot — screenshot chromium via Tor (18)
+[x] INTEL otomatis (R217): KB 69 rule → tiap deteksi langsung kasih
+    ⚠ kerentanan + 🔧 teknik lanjutan; panel per modul (techstack/web/dns/mail/
+    sublive/celah/jsfind/ports/wayback/vuln) + intel.json + seksi di report.md
+[x] heuristik SPF: ganti cek 'tanpa include' (false positive) → analisis
+    +all/~all/-all (benar-benar longgar)
+[x] R219 FIX nuclei-unresponsive: latensi Tor 6–14 dtk > timeout 10 dtk →
+    mhe default 30 → 20/20 host diskip diam-diam (exit=0, temuan 0).
+    Patch: -timeout 30 -retries 2 -mhe 9999 -duc (config.json: nuclei_timeout/
+    nuclei_retries/nuclei_mhe). Buktinya: uji 55 template → 121 koneksi, 0 skip.
+
+## v2.1 (prioritas)
+[x] whois: perbaiki python-whois (DNS error Py3.14) — fallback CLI sudah jalan
+    (E2E 6 Okt di Ubuntu: engine=whois_shim, data lengkap)
+[ ] email provider-check (holehe-style): cek email di mail.ru/yahoo/proton/dll
+[x] screenshot: playwright headless per subdomain → bukti visual laporan (5 Okt, modul 18)
+[x] JS endpoint extractor: URL/endpoint tersembunyi dari semua file .js (5 Okt, modul 17)
+[ ] HIBP: isi hibp_api_key → modul leak aktif
+[x] diff wayback: snapshot lama vs sekarang (halaman admin yang dihapus) — modul 20
+    `waybackdiff` (CDX → snapshot tertua + live → difflib; E2E 6 Okt: 9% + 86 baris diff)
+
+## v3.0 (ide)
+[x] sublive → auto-feed ke vuln (nuclei -l sublive.txt) — modul 8 opsi "2=sublive"
+[ ] reputasi IP: AbuseIPDB/VirusTotal (butuh API key)
+[x] graf subdomain/IP/NS → dot/graphviz utk lampiran laporan — modul 21 `graf`
+    (subs.json → pohon berwarna per-label → SVG; E2E 6 Okt: 30 host/29 edge/23 cluster)
+[x] report.html: render report.md → HTML utk klien — modul 22 `report`
+    (md2html stdlib, dark theme mandiri; E2E 6 Okt: 12,8 KB)
+[ ] catch-all detection utk validasi pola email @target
+
+## v2.1 — eksekusi agent (6 Okt 2026, mesin analisis Ubuntu PRoot)
+[x] portabilitas: config.json output_dir/scope_file → path lokal
+    (backup: config.json.bak-blackarch); deps apt: whois + graphviz (dot)
+[x] PySocks terpasang — SEMUA modul Tor sebelumnya GAGAL SENYAP ("no response")
+    karena requests tanpa PySocks; kini di-boot checklist (OK/FAIL)
+[x] FIX argparse: --out/--authorized/--quiet sebelum subcommand ditimpa default
+    subparser → False senyap. Solusi default=SUPPRESS. Footgun scope: --authorized
+    di posisi depan dulu HILANG → modul aktif ditolak/diizinkan salah.
+[x] waybackdiff E2E (Tor): CDX OK → snapshot 2002-01-20 vs live 2026 → 9% mirip,
+    86 baris diff, json+diff tersimpan (--out posisi depan teruji)
+[x] graf E2E: 30 host/29 edge/23 cluster → graf.svg 28 KB (fix label cluster:
+    rsplit salah → label relatif apex)
+[x] report E2E: report.md → report.html 12,9 KB (tabel/list/code/hilite)
+[x] menu interaktif: opsi 20/21/22 tampil tanpa NameError
+
+## v2.2 — RedTeam Edition (6 Okt 2026 sore, mesin analisis)
+[x] favicon (menu 23) — mmh3 hash ikon → pivot Shodan/FOFA (hacktricks §Favicon);
+    E2E wikipedia.org → 2 hash unik + link dork; regex dukung rel polos; tolak data:
+[x] trackers (menu 24) — ID analytics/verify → pivot aset sama-tim (hacktricks §Trackers);
+    E2E kompas.com → GTM-PT7PC4 + FB Pixel 423063207362401 + link pivot google
+[x] asn (menu 25) — RIPEstat network-info + as-overview + RDAP → ASN/holder/prefix
+    + dork shodan asn:ASxxxx (hacktricks §ASNs; bgpview.io MATI → ganti RIPEstat);
+    E2E example.com → AS13335 CLOUDFLARENET prefix 172.66.144.0/20
+[x] dork +10 entri (16→26): token GitHub modern, file rahasia, grep.app/sourcegraph/
+    searchcode, secret cloud, AI key, subdomain listing, CCTV/IoT, IntelX
+[x] graf + node DNS dari dns.json (A=ellipse, NS=component, MX=cds) — item "IP/NS" ✓
+[x] mmh3 pure-Python fallback _mmh3_32 (0 mismatch/1000 vs paket mmh3)
+[x] recon-ng 5.1.2: clone + deps (lxml/mechanize) + 109 modul + symlink PATH
+    + PATCH framework.py (proxy hardcode http:// → dukung socks5h/Tor)
+    + wrapper `reconng` (menu 26, SOURCE=target, --cmd global); E2E: 2 host di data.db
+[x] versi → v2.2 (banner/menu/deskripsi/README)
+[x] GUI refresh v2.2: wave gradient logo pasca-reveal (3 frame) · spinner ⠋⠙⠸
+    di boot checklist · kursor block berkedip di typewrite · subtitle menu + legend
+    auto; escape wave bypass Rich (os.write) — terbukti 3 frame di pty
+[x] AUTO SWEEP: menu `a` (standar) / `af` (+nuclei·nmap·shot·recon-ng) + CLI
+    `auto [--skip]` — menyatukan build_report + mod_graf + cmd_report; E2E:
+    4 modul OK, report.md+report.html, durasi tercatat
+[x] build_report: order/JSON kini semua key (sublive/waybackdiff/techstack/
+    favicon/trackers/asn/celah/jsfind/people/vuln/ports/shot/reconng)
+
+## Catatan Operasional
+- Output: <folder>/output/<host>_<timestamp>/ (satu folder per invokasi)
+- Semua HTTP lewat Tor. nmap = proxychains socks5 (pc_nmap.conf).
+- msfconsole & whatweb = TANPA Tor (konfirmasi wajib di menu).
+- Target hanya scope.txt; override = --authorized (izin tertulis).
+- PII: guard masking **DIMATIKAN 2026-10-05** -- salin/ekspor isi utk laporan diizinkan (advisory).

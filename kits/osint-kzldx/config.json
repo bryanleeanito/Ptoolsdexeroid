@@ -1,0 +1,29 @@
+{
+  "tor_proxy": "socks5h://127.0.0.1:9050",
+  "use_tor": true,
+  "pace": 3.0,
+  "timeout": 30,
+  "output_dir": "/root/data/Osint by kzldx/output",
+  "scope_file": "/root/data/Auth/scope.txt",
+  "hibp_api_key": "",
+  "nuclei_proxy": "socks5://127.0.0.1:9050",
+  "nuclei_timeout": 30,
+  "nuclei_retries": 2,
+  "nuclei_mhe": 9999,
+  "nmap_via_tor": true,
+  "nmap_tor_ports": "21,22,25,53,80,110,143,443,445,465,587,993,995,1433,1521,2049,3000,3306,3389,5000,5432,5900,6379,8000,8080,8443,8888,9090,9200,27017",
+  "wayback_limit": 20000,
+  "dkim_selectors": [
+    "default",
+    "google",
+    "selector1",
+    "selector2",
+    "k1",
+    "mail",
+    "s1",
+    "s2"
+  ],
+  "enforce_scope": false,
+  "enforce_blocklist": false,
+  "anim_speed": 1.0
+}

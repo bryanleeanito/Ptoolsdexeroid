@@ -1,0 +1,27 @@
+# ── jangan pernah ke-commit ──
+*.token
+*.env
+.env*
+.secrets/
+*.pem
+id_rsa*
+*.p12
+*.pfx
+
+# ── output kerja / evidence (bukan source) ──
+*_out/
+gapps_out/
+gapps_obf/
+sheet_dumps/
+cookie_forge/
+api_probe/
+**/output/
+*.log
+
+# ── junk ──
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+Thumbs.db
+*.bak*
