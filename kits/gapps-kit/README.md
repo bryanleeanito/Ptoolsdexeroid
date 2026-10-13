@@ -29,7 +29,8 @@ escalation ke identitas guru) → `deobfuscate` (bypass client-side password).
 |---|---|---|
 | `probe.py` | audit statis: surface API, ID Sheet, cookie, password-in-JS | E2E mock ✓ |
 | `deobfuscate.py` | decode JS obf → `secrets.txt` | E2E mock ✓ |
-| `api_probe.py` | `google.script.run` enumeration + call (playwright) | py_compile ✓ — E2E di BlackArch (butuh `pip install playwright`) |
+| `api_probe.py` | `google.script.run` enumeration + call (playwright) | **JS logika TERBUKTI 5/5** via `verify_api_js.py` (Node, tanpa browser) — wrapper Python butuh `playwright` → BlackArch |
+| `verify_api_js.py` | harness: buktikan JS_ENUM/JS_CALL di Node dgn stub | E2E ✓ — nangkep 2 bug false-positive |
 | `gviz_fetch.py` | Sheet dump via gviz/export | E2E mock ✓ |
 | `forge_cookie.py` | cookie identity enumeration + evidence | E2E mock ✓ |
 | `kit_common.py` | scope gate, HTTP helper, output | bersama |

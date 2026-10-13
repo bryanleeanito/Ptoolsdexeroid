@@ -33,28 +33,19 @@ JS_ENUM = r"""
 () => {
   const found = new Set();
   const run = window.google && google.script && google.script.run;
+  // 1) sumber otoritatif: milik google.script.run sendiri
   if (run) {
     for (const k of Object.getOwnPropertyNames(run)) {
-      if (typeof run[k] === 'function') found.add(k);
+      if (typeof run[k] === 'function' && !k.startsWith('__')) found.add(k);
     }
-    // google.script.run adalah Proxy: intercept pemanggilan via getOwnPropertyDescriptor
-    try {
-      const probe = new Proxy(run, {
-        get(t, p) { if (typeof p === 'string') found.add(p); return t[p]; }
-      });
-      probe.__enum__;  // trigger get
-    } catch (e) {}
   }
-  // gali dari source halaman (fungsi server yg dipanggil: xxx.yyy( / google.script.run.yyy(
+  // 2) dari source halaman: hanya google.script.run.<nama> (sinyal pasti)
   const html = document.documentElement.outerHTML;
-  for (const m of html.matchAll(/google\.script\.run\s*\.?\s*([A-Za-z_]\w*)/g)) found.add(m[1]);
-  for (const m of html.matchAll(/([A-Za-z_]\w*)\s*\(\s*['"]/g)) {
-    // kandidat fungsi server di deklarasi: function xxx(){} atau const xxx = ...
-    if (html.includes('function ' + m[1]) || new RegExp('(const|let|var)\\s+' + m[1] + '\\s*=').test(html))
-      found.add(m[1]);
+  for (const m of html.matchAll(/google\.script\.run\s*\.\s*([A-Za-z_]\w*)/g)) {
+    found.add(m[1]);
   }
   return [...found].filter(n => !['then','catch','withSuccessHandler','withFailureHandler',
-    'withUserObject','setTimeout','length','name','prototype'].includes(n));
+    'withUserObject','setTimeout','length','name','prototype','constructor'].includes(n));
 }
 """
 
