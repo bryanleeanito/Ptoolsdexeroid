@@ -37,6 +37,7 @@ Catatan: jalur **WARP** butuh `warp-cli` (belum ada di box ini) → NEEDS VERIFI
 | `hosting-tester` | tester **cPanel** (cookie `cpsession`) & **FTP** (`230`) · lockout `421` kebaca → STOP 3× · `--rotate` | **E2E ✓** 3/3 |
 | `secret-scanner` | cari secret ter-hardcode di semua dump (10 pola: private key, AWS/GitHub/Google key, URL-auth, Bearer, Sheet-ID, GAS-ID, JWT, cred hardcode) · **redact by default** · fail-safe binary | **E2E ✓ 10/10 pola** |
 | `report-packer` | rangkai output SEMUA kit jadi 1 laporan (deteksi sumber dari kunci JSON, bukan nama file) · **redact-ulang defense in depth** · dedup path | **E2E ✓ 7/7 format** |
+| `target-inventory` | katalog target + **generator `scope.txt`** (satu-satunya sumber gerbang fail-closed semua kit) · izin `tertulis` saja yang keluar · `--check` = pre-flight semantik identik `kit_common` | **E2E ✓** |
 | `wp-auth-tester` | tembak form login WP pakai wordlist di atas · deteksi lockout → STOP · `--rotate tor` ganti egress tiap N percobaan | **E2E ✓** SUKSES ke-deteksi · 429 → STOP · NEWNYM fire |
 
 Rantai penuh:
