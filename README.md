@@ -11,7 +11,8 @@ kits/
 ├── osint-kzldx/     v2.2  — suite OSINT 26 menu + AUTO SWEEP + GUI animasi
 ├── egress-rotator/  v1.0  — Tor NEWNYM · WARP rekey · proxy pool (E2E ✓)
 ├── wordlist-sekolah/v1.0  — kamus password sekolah Indonesia (E2E ✓)
-└── elementor-scanner/v1.0 — cari form Elementor tersembunyi (E2E ✓)
+├── elementor-scanner/v1.0 — cari form Elementor tersembunyi (E2E ✓)
+└── wp-auth-tester/  v1.0  — tembak form login WP, lockout-aware (E2E ✓)
 HANDOFF.md             — status antar mesin + wish-list input
 ```
 

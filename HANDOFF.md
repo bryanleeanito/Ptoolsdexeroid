@@ -27,6 +27,14 @@ Diperbarui: 2026-10-12 (Tab Rumah)
 
 Catatan: jalur **WARP** butuh `warp-cli` (belum ada di box ini) → NEEDS VERIFICATION di BlackArch.
 
+## Eksekusi (baru, v1.0)
+
+| Tool | Fungsi | Verifikasi |
+|---|---|---|
+| `wp-auth-tester` | tembak form login WP pakai wordlist di atas · deteksi lockout → STOP · `--rotate tor` ganti egress tiap N percobaan | **E2E ✓** SUKSES ke-deteksi · 429 → STOP · NEWNYM fire |
+
+Rantai penuh: `wordlist-sekolah` → `wp-auth-tester` → (kena lockout) → `egress-rotator` → ulang.
+
 ### Sisa input yang masih berguna
 - 🥈: daftar nama guru/TU + varian nama sekolah asli + format NIS/NIP/NISN target
 - 🥉: base URL target + sitemap 186 slug (biar nggak crawl ulang) + cookie WP bila ada
