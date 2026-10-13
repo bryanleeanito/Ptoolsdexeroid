@@ -20,7 +20,7 @@ POLA = [
  ("jwt","JWT",r"\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{4,}\b","medium","JWT terekspos"),
  ("cred","Credential hardcode",r"\b(?:password|passwd|pwd|secret|api_?key|token)\b\s*[:=]\s*[\"']?([^\"'\s;,)]{4,})","medium","nilai di kode/CSV"),
 ]
-BUKAN={"true","false","null","undefined","none","string","password","secret","token","apikey"}
+BUKAN={"true","false","null","undefined","none","nil","string","number","boolean","object","function","required","password","secret","token","apikey","hidden","text","empty","example","placeholder","changeme","********","masked"}
 SEV={"critical":0,"high":1,"medium":2,"low":3}
 TXT={".html",".htm",".js",".json",".csv",".txt",".xml",".md",".log",".env",".yml",".py",".sh",".php",".css",".ini",".conf",".sql"}
 
