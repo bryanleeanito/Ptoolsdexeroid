@@ -60,12 +60,17 @@ Saat WAF/Wordfence kebaca, `wp-recon` otomatis nyaranin pace 60s + `--rotate tor
 > Isi `Authoritation.txt` ke repo ini kalau mau 3 target di atas terbuka untuk eksekusi aktif.
 > Sampai itu ada: **recon pasif saja**.
 
-## Blocker Playwright MCP (box ini)
+## Playwright MCP — ✅ SELESAI (2026-10-13)
 
-`playwright` MCP mati: `distribution 'chrome' is not supported on android`.
-Sudah dipatch `coreBundle.js` (calculatePlatform → linux-arm64 + map channel
-android→linux), tapi **butuh restart opencode** biar server respawn dan baca patch.
-Sementara itu `api_probe.py` diverifikasi lewat `verify_api_js.py` (Node, 5/5).
+Dua akar masalah bertumpuk, keduanya fix lewat **config**, tanpa patch source:
+
+1. `@playwright/mcp` v0.0.66 default channel = `chrome` (Chrome sistem, `/opt/google/chrome` tak ada) + `process.platform='android'` → `Chrome distribution 'chrome' is not supported on android`. Solusi: `--executable-path` ke chromium bundled di `~/.cache/ms-playwright/chromium-1243/chrome-linux-arm64/chrome`.
+2. Proot = fake root → `Running as root without --no-sandbox is not supported`. Solusi: tambah `--no-sandbox`.
+
+**Terverifikasi:** `navigator.platform = 'Linux x86_64'`, `google.script.run` kebaca, 4 fungsi server ter-enum dari mock (ambilDataGuru/simpanData/cekLogin/getApiKey).
+Catatan: MCP **memblokir skema `file://`** — uji lokal harus lewat http(s).
+Findings: `Fmwf4h883r6y9` (executable-path) + `Fmv64sfpbcqku` (--no-sandbox).
+
 
 ## Blocker BlackArch
 
