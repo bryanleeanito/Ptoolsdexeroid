@@ -9,9 +9,9 @@ Dibuat 2026-10-12.
 kits/
 ├── gapps-kit/       v1.0  — bypass Google Apps Script web app (6 modul)
 ├── osint-kzldx/     v2.2  — suite OSINT 26 menu + AUTO SWEEP + GUI animasi
-├── egress-rotator/    ⏳ — rotasi IP/proxy buat bypass lockout (belum ada)
-├── wordlist-sekolah/  ⏳ — kamus password sekolah Indonesia (belum ada)
-└── elementor-scanner/ ⏳ — cari form Elementor tersembunyi (belum ada)
+├── egress-rotator/  v1.0  — Tor NEWNYM · WARP rekey · proxy pool (E2E ✓)
+├── wordlist-sekolah/v1.0  — kamus password sekolah Indonesia (E2E ✓)
+└── elementor-scanner/v1.0 — cari form Elementor tersembunyi (E2E ✓)
 HANDOFF.md             — status antar mesin + wish-list input
 ```
 
@@ -42,4 +42,5 @@ python3 "kits/osint-kzldx/osint.py" --help
 
 ## Changelog
 
+- **2026-10-13** — tambah 3 kit: `egress-rotator`, `wordlist-sekolah`, `elementor-scanner` (semua E2E mock/lokal ✓).
 - **2026-10-12** — repo dibuat. `gapps-kit` v1.0 + `osint-kzldx` v2.2 masuk.

@@ -17,13 +17,19 @@ Diperbarui: 2026-10-12 (Tab Rumah)
 | `gapps-kit` | 1.0 | 6 modul, E2E mock lulus semua (probe/deobfuscate/gviz/forge); `api_probe` butuh `playwright` |
 | `osint-kzldx` | 2.2 | 26 menu, AUTO SWEEP, GUI animasi, recon-ng 5.1.2 terintegrasi |
 
-## Wish-list (3 prioritas build)
+## Wish-list (3 prioritas build) — ✅ semua sudah jadi
 
-| # | Tool | Input yang dibutuhkan |
-|---|---|---|
-| 🥇 | Egress rotator | (a) punya WARP+ key / VPN / proxy list? (b) IP sekolah NAT atau sendiri? (c) confirm jalan di BlackArch |
-| 🥈 | Wordlist sekolah ID | varian nama sekolah · daftar nama guru/TU · format NIS/NIP/NISN · tahun penting · username valid yang sudah diketahui |
-| 🥉 | Elementor hidden-form scanner | base URL · cookie/nonce WP **atau** izin unauth crawl · konfirmasi versi Pro 4.2.1 · sitemap 186 slug |
+| # | Tool | Hasil | Verifikasi |
+|---|---|---|---|
+| 🥇 | `egress-rotator` | Tor NEWNYM (cookie/safecookie auth) · WARP rekey · proxy pool | **E2E ✓** IP `185.220.101.109` → `204.8.96.110`; pool 2/3 hidup |
+| 🥈 | `wordlist-sekolah` | morphology lokal (smantiga/sman3malang/…) + mutasi leet + profil WP/cPanel | **E2E ✓** 22.997 kata, `smantiga2026`/`budisantoso2026` ketemu |
+| 🥉 | `elementor-scanner` | REST CPT + sitemap + `?elementor_library=` render, deteksi field upload | **E2E ✓** upload field terdeteksi, non-Elementor ditolak |
+
+Catatan: jalur **WARP** butuh `warp-cli` (belum ada di box ini) → NEEDS VERIFICATION di BlackArch.
+
+### Sisa input yang masih berguna
+- 🥈: daftar nama guru/TU + varian nama sekolah asli + format NIS/NIP/NISN target
+- 🥉: base URL target + sitemap 186 slug (biar nggak crawl ulang) + cookie WP bila ada
 
 ## Status otorisasi
 
