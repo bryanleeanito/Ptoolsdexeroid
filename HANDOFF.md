@@ -31,9 +31,16 @@ Catatan: jalur **WARP** butuh `warp-cli` (belum ada di box ini) → NEEDS VERIFI
 
 | Tool | Fungsi | Verifikasi |
 |---|---|---|
+| `wp-recon` | username enum (REST + `?author=N`) · fingerprint versi plugin/tema · deteksi WAF → saran pace | **E2E ✓** `elementor-pro v4.2.1` + wordfence + cf-ray kebaca |
 | `wp-auth-tester` | tembak form login WP pakai wordlist di atas · deteksi lockout → STOP · `--rotate tor` ganti egress tiap N percobaan | **E2E ✓** SUKSES ke-deteksi · 429 → STOP · NEWNYM fire |
 
-Rantai penuh: `wordlist-sekolah` → `wp-auth-tester` → (kena lockout) → `egress-rotator` → ulang.
+Rantai penuh:
+```
+wp-recon ─┬─ users.txt ──────────────┐
+          └─ fingerprint (WAF/versi) ┼→ wp-auth-tester → egress-rotator
+wordlist-sekolah ── wordlist.txt ────┘
+```
+Saat WAF/Wordfence kebaca, `wp-recon` otomatis nyaranin pace 60s + `--rotate tor --rotate-every 5`.
 
 ### Sisa input yang masih berguna
 - 🥈: daftar nama guru/TU + varian nama sekolah asli + format NIS/NIP/NISN target
@@ -51,6 +58,13 @@ Rantai penuh: `wordlist-sekolah` → `wp-auth-tester` → (kena lockout) → `eg
 
 > Isi `Authoritation.txt` ke repo ini kalau mau 3 target di atas terbuka untuk eksekusi aktif.
 > Sampai itu ada: **recon pasif saja**.
+
+## Blocker Playwright MCP (box ini)
+
+`playwright` MCP mati: `distribution 'chrome' is not supported on android`.
+Sudah dipatch `coreBundle.js` (calculatePlatform → linux-arm64 + map channel
+android→linux), tapi **butuh restart opencode** biar server respawn dan baca patch.
+Sementara itu `api_probe.py` diverifikasi lewat `verify_api_js.py` (Node, 5/5).
 
 ## Blocker BlackArch
 
