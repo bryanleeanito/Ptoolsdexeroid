@@ -15,7 +15,8 @@ kits/
 ├── wp-recon/        v1.0  — username enum + fingerprint + deteksi WAF (E2E ✓)
 ├── wp-auth-tester/  v1.0  — tembak form login WP, lockout-aware (E2E ✓)
 ├── hosting-tester/  v1.0  — tester cPanel & FTP, deteksi lockout (E2E ✓)
-└── secret-scanner/  v1.0  — cari secret ter-hardcode di semua dump (E2E ✓)
+├── secret-scanner/  v1.0  — cari secret ter-hardcode di semua dump (E2E ✓)
+└── report-packer/   v1.0  — rangkai output semua kit jadi 1 laporan (E2E ✓)
 HANDOFF.md             — status antar mesin + wish-list input
 ```
 
@@ -46,6 +47,7 @@ python3 "kits/osint-kzldx/osint.py" --help
 
 ## Changelog
 
+- **2026-10-13** — tambah `report-packer` (agregasi laporan lintas kit).
 - **2026-10-13** — tambah `secret-scanner` (10 pola deteksi, redact by default), `wp-recon`, `hosting-tester`, `crack_helper`. Playwright MCP beres.
 - **2026-10-13** — tambah 3 kit: `egress-rotator`, `wordlist-sekolah`, `elementor-scanner` (semua E2E mock/lokal ✓).
 - **2026-10-12** — repo dibuat. `gapps-kit` v1.0 + `osint-kzldx` v2.2 masuk.
