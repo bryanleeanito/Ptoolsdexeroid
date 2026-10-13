@@ -7,7 +7,7 @@ Dibuat 2026-10-12.
 
 ```
 kits/
-├── gapps-kit/       v1.0  — bypass Google Apps Script web app (6 modul)
+├── gapps-kit/       v1.0  — bypass Google Apps Script web app (7 modul)
 ├── osint-kzldx/     v2.2  — suite OSINT 26 menu + AUTO SWEEP + GUI animasi
 ├── egress-rotator/  v1.0  — Tor NEWNYM · WARP rekey · proxy pool (E2E ✓)
 ├── wordlist-sekolah/v1.0  — kamus password sekolah Indonesia (E2E ✓)

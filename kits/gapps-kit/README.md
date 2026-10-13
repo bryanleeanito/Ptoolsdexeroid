@@ -55,6 +55,19 @@ python3 forge_cookie.py --url 'https://script.google.com/macros/s/AKfyc.../exec'
     --cookie-name role --values-file users.txt --ok-sig 'Data Guru' --pace 2
 ```
 
+## Status modul (semua lulus uji lokal)
+
+| Modul | Fungsi | Verifikasi |
+|---|---|---|
+| `kit_common.py` | `http_get` (cookie + auto-redirect), `scope_check` **fail-closed**, `outdir`/`save_json`, `pace_sleep` | dipakai semua modul |
+| `probe.py` | audit static HTML/JS deployment → daftar `google.script.run` + API key + meta | **E2E ✓** (4 fungsi kebaca) |
+| `deobfuscate.py` | decode JS hardcoded (`atob` / `fromCharCode` / hex) → JSON akun | **E2E ✓** (3 akun + KEY) |
+| `gviz_fetch.py` | dump query gviz Sheet → CSV/JSON | **E2E ✓** (3 baris) |
+| `forge_cookie.py` | bake SID cookie dari akun JSON → cek akses tiap akun | **E2E ✓** (3/6 lolos, wajar) |
+| `api_probe.py` | panggil fungsi privat dari sisi klien (`--js-enum` bersih) | **5/5 diverifikasi Node** |
+| `verify_api_js.py` | harness Node — jalankan kode API asli di luar browser | **5/5 ✓** |
+| `crack_helper.py` | deteksi jenis hash → rencana `hashcat` (mode `-m` benar, 4 fase) | **E2E ✓** (10 hash → 9 jenis) |
+
 ## Catatan operasional (BlackArch)
 
 - `api_probe.py` **jangan lewat Tor** (Google 429/penolakan) — jalankan direct.
