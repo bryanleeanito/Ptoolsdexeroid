@@ -14,7 +14,7 @@ Diperbarui: 2026-10-12 (Tab Rumah)
 
 | Kit | Versi | Verifikasi |
 |---|---|---|
-| `gapps-kit` | 1.0 | 6 modul, E2E mock lulus semua (probe/deobfuscate/gviz/forge); `api_probe` butuh `playwright` |
+| `gapps-kit` | 1.0 | 7 modul, E2E mock lulus (probe/deobfuscate/gviz/forge/**crack_helper**); `api_probe` 5/5 via Node |
 | `osint-kzldx` | 2.2 | 26 menu, AUTO SWEEP, GUI animasi, recon-ng 5.1.2 terintegrasi |
 
 ## Wish-list (3 prioritas build) — ✅ semua sudah jadi
@@ -32,6 +32,7 @@ Catatan: jalur **WARP** butuh `warp-cli` (belum ada di box ini) → NEEDS VERIFI
 | Tool | Fungsi | Verifikasi |
 |---|---|---|
 | `wp-recon` | username enum (REST + `?author=N`) · fingerprint versi plugin/tema · deteksi WAF → saran pace | **E2E ✓** `elementor-pro v4.2.1` + wordfence + cf-ray kebaca |
+| `hosting-tester` | tester **cPanel** (cookie `cpsession`) & **FTP** (`230`) · lockout `421` kebaca → STOP 3× · `--rotate` | **E2E ✓** 3/3 |
 | `wp-auth-tester` | tembak form login WP pakai wordlist di atas · deteksi lockout → STOP · `--rotate tor` ganti egress tiap N percobaan | **E2E ✓** SUKSES ke-deteksi · 429 → STOP · NEWNYM fire |
 
 Rantai penuh:
