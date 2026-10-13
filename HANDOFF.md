@@ -4,6 +4,8 @@ Diperbarui: 2026-10-12 (Tab Rumah)
 
 ## Mesin
 
+> **Push sudah jalan (2026-10-13).** Autentikasi via `gh` device flow (scope `repo`/`gist`/`read:org`), remote `origin` = HTTPS. Deploy key SSH opsional — kalau mau dipasang, `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHadAkwkJoRoHgoPmLYqUChiE9lTz3i0DLp9D8we7loY` + centang **Allow write access**.
+
 | Mesin | Peran | Status |
 |---|---|---|
 | Tab Rumah (box ini) | analisa, OSINT, source-code review, build toolkit | aktif |
