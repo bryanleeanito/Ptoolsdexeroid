@@ -23,7 +23,8 @@ kits/
 ├── ctf-forensics/   v1.0  — magic/EXIF/chunk/hidden-data scanner (E2E ✓)
 ├── ctf-web/         v1.0  — recon web jeorpadic: header/JWT/leak path (E2E ✓)
 ├── ctf-pwn/         v1.0  — checklist + prep script BlackArch (pwntools/gdb/r2)
-└── ctfd-solver/     v1.0  — solver CTFd API: login/list/fetch/sweep/autosolve (E2E mock ✓)
+├── ctfd-solver/     v1.0  — solver CTFd API: login/list/fetch/sweep/autosolve (E2E mock ✓)
+└── ctf-drills/      v1.0  — 12 drill latihan + kunci (12/12 terverifikasi kit)
 HANDOFF.md             — status antar mesin + wish-list input
 ```
 
@@ -54,6 +55,12 @@ python3 "kits/osint-kzldx/osint.py" --help
 
 ## Changelog
 
+- **2026-10-14** — tambah `ctf-drills` (12 soal latihan + kunci, verifikasi
+  otomatis 12/12). Perbaikan nyata dari latihan: `decode.py` (FLAG_KETAT
+  deteksi `flag` setelah underscore; rantai STOP kalau input sudah berflag;
+  cabang BFS jamin decoder struktural; decoder baru railfence + whitespace;
+  `--in` tak lagi strip whitespace payload stego) + `classics.py` (arah
+  dekripsi Vigenere kebalik).
 - **2026-10-14** — tambah `ctfd-solver` (login form+nonce & token API, list,
   fetch, sweep flags.json, autosolve rantai-decode; E2E mock 6/6). Merge
   `ctf-kit` → `ctf-decoder`.

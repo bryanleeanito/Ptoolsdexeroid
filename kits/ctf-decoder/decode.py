@@ -37,7 +37,8 @@ import argparse, base64, re, string, sys, urllib.parse
 # ---------------------------------------------------------------- sinyal flag
 # Pola flag CTF pada umumnya. Ini skor TERTINGGI: kalau ketemu, rantai STOP.
 FLAG_KETAT = re.compile(
-    r"\b(?:flag|ctf|picoctf|hackthebox|htb|ductf|thm|ohs|fcsc|ais3|dctf|watevr"
+    r"(?<![A-Za-z0-9])(?:flag|ctf|picoctf|hackthebox|htb|ductf|thm|ohs|fcsc"
+    r"|ais3|dctf|watevr"
     r"|midnight|seccon|hitcon|google|fbctf|umass|srdnlen|dexero)\s*\{[^{}\s]{1,300}\}",
     re.I)
 FLAG_LONGGAR = re.compile(r"\b[A-Za-z0-9_]{2,15}\{[^{}\s]{4,300}\}")
@@ -334,6 +335,54 @@ def d_double_url(t: str) -> str | None:
     return r if r != t and _keterbacaan(r) >= 0.95 else None
 
 
+def _rail_decode(t: str, k: int) -> str:
+    n = len(t)
+    pola, r, d = [], 0, 1
+    for _ in range(n):
+        pola.append(r)
+        r += d
+        if r == 0 or r == k - 1:
+            d = -d
+    hitung = [pola.count(i) for i in range(k)]
+    rel = [t[sum(hitung[:i]):sum(hitung[:i + 1])] for i in range(k)]
+    pos = [0] * k
+    out = []
+    for rail in pola:
+        out.append(rel[rail][pos[rail]])
+        pos[rail] += 1
+    return "".join(out)
+
+
+def d_railfence(t: str) -> str | None:
+    """Rail fence k=2..6 — kandidat dengan skor tertinggi menang."""
+    if len(t.strip()) < 16:
+        return None
+    kandidat = []
+    for k in range(2, 7):
+        r = _rail_decode(t, k)
+        if r and r != t:
+            kandidat.append((skor(r), r))
+    if not kandidat:
+        return None
+    kandidat.sort(key=lambda x: -x[0])
+    return kandidat[0][1]
+
+
+def d_whitespace(t: str) -> str | None:
+    """Stego spasi/tab: spasi=0, tab=1 -> bit -> teks."""
+    m = re.search(r"[ \t]{16,}", t)
+    if not m or " " not in m.group(0) or "\t" not in m.group(0):
+        return None
+    bits = "".join("0" if c == " " else "1" for c in m.group(0))
+    bits = bits[:len(bits) - len(bits) % 8]
+    try:
+        r = bytes(int(bits[i:i + 8], 2)
+                  for i in range(0, len(bits), 8)).decode("utf-8")
+    except Exception:
+        return None
+    return r if _keterbacaan(r) >= 0.8 else None
+
+
 DAFTAR: list[tuple[str, object]] = [
     ("base64", d_base64),
     ("base64url", d_base64url),
@@ -352,6 +401,8 @@ DAFTAR: list[tuple[str, object]] = [
     ("atbash", d_atbash),
     ("reverse", d_reverse),
     ("reverse-baris", d_newline_reverse),
+    ("railfence", d_railfence),
+    ("whitespace", d_whitespace),
 ]
 
 
@@ -453,6 +504,15 @@ def lahirkan(t: str) -> list[tuple[str, str]]:
 
 BUDGET_NODE = 400
 
+# decoder "struktural": outputnya deterministik (bukan mutasi huruf seperti
+# rot13/atbash). Lapis antara kayak string hex sering SKORNYA RENDAH tapi
+# jalan menuju flag - jadi tak boleh terpotong cabang BFS.
+STRUKTUR = frozenset({
+    "base64", "base64url", "base32", "base85", "base58", "base62", "hex",
+    "url", "double-url", "quoted-printable", "unicode-escape", "binary",
+    "morse",
+})
+
 
 def rantai(t: str, maks: int, tunjuk_kandidat: bool = False):
     """BFS sampai ketemu flag, atau node budget habis. -> (langkah, teks_akhir).
@@ -468,6 +528,9 @@ def rantai(t: str, maks: int, tunjuk_kandidat: bool = False):
     `terkunjung` mencegah oscilasi (mis. reverse lalu reverse balik).
     """
     from collections import deque
+
+    if FLAG_KETAT.search(t):
+        return [], t          # input SUDAH berisi flag{ asli — jangan dibongkar lagi
 
     antre = deque([(t, [])])
     terkunjung = {t}
@@ -489,7 +552,22 @@ def rantai(t: str, maks: int, tunjuk_kandidat: bool = False):
             alt = ", ".join(n for n, _ in kandidat[1:4])
             print(f"    [kandidat lain @ lapis {len(jalan)+1}]: {alt}",
                   file=sys.stderr)
-        for nama, berikut in kandidat[:2]:   # batasi cabang, jangan meledak
+        # pilih anak: (1) kandidat berflag dulu, (2) decoder STRUKTURAL tak
+        # boleh terbuang - lapis antara (hex/b64) skornya sering rendah padahal
+        # jalan menuju flag, (3) sisanya skor teratas. Max 4 cabang/node.
+        pilih = [x for x in kandidat
+                 if FLAG_KETAT.search(x[1]) or FLAG_LONGGAR.search(x[1])]
+        for x in kandidat:
+            if len(pilih) >= 4:
+                break
+            if x[0] in STRUKTUR and x not in pilih:
+                pilih.append(x)
+        for x in kandidat:
+            if len(pilih) >= 4:
+                break
+            if x not in pilih:
+                pilih.append(x)
+        for nama, berikut in pilih:
             if berikut in terkunjung:
                 continue
             terkunjung.add(berikut)
@@ -538,7 +616,8 @@ def main() -> int:
         print("[hashid]", ", ".join(tipe) if tipe else "tak dikenali")
 
     if not a.teks and not a.inp and not sys.stdin.isatty():
-        a.teks = sys.stdin.read().strip()   # dukung: echo "..." | decode.py
+        # rstrip newline SAJA — .strip() membunuh payload stego spasi/tab
+        a.teks = sys.stdin.read().rstrip("\r\n")
     if not a.teks and not a.inp:
         ap.error("butuh argumen teks, --in FILE, atau stdin")
     if a.max_layer < 1 or a.max_layer > 64:
@@ -549,7 +628,8 @@ def main() -> int:
     teks = a.teks
     if a.inp:
         try:
-            teks = open(a.inp, encoding="utf-8", errors="replace").read().strip()
+            teks = open(a.inp, encoding="utf-8", errors="replace").read() \
+                .rstrip("\r\n")
         except OSError as e:
             print(f"[STOP] gagal baca {a.inp}: {e}", file=sys.stderr)
             return 1

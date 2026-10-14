@@ -265,6 +265,43 @@ def t_stdlib_saja():
     return True
 
 
+def _rail_enc(t, k=3):
+    rails, r, d = [""] * k, 0, 1
+    for ch in t:
+        rails[r] += ch
+        r += d
+        if r == 0 or r == k - 1:
+            d = -d
+    return "".join(rails)
+
+
+def t_railfence():
+    """Rail fence k=3 dari teks berflag harus terbongkar otomatis."""
+    teks = "kirimdokumenrahasiakepadaatasan flag{railfence_terbuka}"
+    out = jalankan_decode(["--in", _simpan("rail", _rail_enc(teks, 3))])
+    if not ada_flag(out):
+        return f"railfence tak terbongkar: {out[-200:]}"
+    return True
+
+
+def t_whitespace():
+    """Stego spasi/tab (spasi=0 tab=1) harus terbaca otomatis."""
+    bits = "".join(format(b, "08b") for b in FLAG.encode())
+    ws = "".join(" " if b == "0" else "\t" for b in bits)
+    out = jalankan_decode(["--in", _simpan("ws", "ada petunjuk di bawah\n" + ws)])
+    return ada_flag(out)
+
+
+def t_xor_hex_plaintext_langsung():
+    """--xor --hex: plaintext asli berflag — rantai tak boleh mutasi lagi
+    (regresi: dulu rot13-lahir-children menutupi flag ketat di root)."""
+    enc = bytes(b ^ 0x42 for b in FLAG.encode())
+    out = jalankan_decode(["--xor", "--hex", enc.hex()])
+    if not ada_flag(out):
+        return f"flag hilang setelah rantai: {out[-200:]}"
+    return True
+
+
 # ==================================================================== JALANKAN
 JUMLAH = [
     ("rantai otomatis: 11 soal", t_rantai_otomatis),
@@ -285,6 +322,9 @@ JUMLAH = [
     ("--out menulis hasil akhir", t_out_file),
     ("format {x} asing tak diklaim FLAG", t_tidak_kerasukan_flag_palsu),
     ("stdlib saja, nol dependensi", t_stdlib_saja),
+    ("railfence k=3 terbongkar otomatis", t_railfence),
+    ("whitespace stego (spasi/tab) terbaca", t_whitespace),
+    ("--xor --hex tak mutasi plaintext berflag", t_xor_hex_plaintext_langsung),
 ]
 
 

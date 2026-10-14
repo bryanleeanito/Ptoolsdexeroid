@@ -70,8 +70,8 @@ def vigenere(text, key, decrypt=True):
     for ch in text:
         if ch.lower() in ALPH:
             k = ALPH.index(key[ki % len(key)].lower())
-            if not decrypt:
-                k = -k
+            if decrypt:
+                k = -k              # dekripsi = geser MUNDUR (bukan maju)
             off = (ALPH.index(ch.lower()) + k) % 26
             r.append(ALPH[off].upper() if ch.isupper() else ALPH[off])
             ki += 1

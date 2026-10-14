@@ -111,6 +111,18 @@ Semua kategori kecakup: web, OSINT, crypto, forensics, misc/encoding, pwn/rev.
 | `ctf-web` | header+keamanan, JWT auto-decode, comment/form/hidden, leak path scan, --js endpoint+key | smoke lokal ✓ |
 | `ctf-pwn` | checklist workflow + `prep_blackarch.sh` (pwntools/gdb/ropper/one_gadget/r2) | jalankan di BlackArch saat ada internet |
 | `ctfd-solver` | solver CTFd universal: login (token/form+nonce), list, fetch attachment, sweep flags.json, autosolve rantai-decode | **E2E mock 6/6 ✓** |
+| `ctf-drills` | 12 drill latihan jeorpadic (decoder/crypto/forensics) + jawaban.json + verify otomatis | **12/12 ✓; 21/21 tes decoder** |
+
+Bug nyata yang ketemu & diperbaiki selama bikin drill (jangan diulang):
+- `classics.py vigenere` — arah dekripsi KEBALIK (`if not decrypt` → `if decrypt`).
+- `decode.py` FLAG_KETAT pakai `\b` — gagal deteksi `..._flag{...}` (\b padahal
+  underscore = word char). Sekarang `(?<![A-Za-z0-9])`.
+- `decode.py` rantai: input yang SUDAH berflag dimutasi lanjut (rot13 anak
+  nutupin flag asli) → early-return.
+- `decode.py` BFS top-2 buang decoder struktural (base64 skor rendah di lapis
+  antara hex) → pilih: berflag > struktural > skor teratas, max 4.
+- `decode.py --in` `.strip()` buang payload stego spasi/tab → rstrip newline.
+- Decoder baru: railfence (k=2..6), whitespace (spasi=0/tab=1).
 
 Target aktif: **ctf.smkpgri3malang.web.id** (akun leeanito, peringkat 3).
 ⚠️ 2026-10-14: situsnya 500 di route login/HTML (API scoreboard jalan) —

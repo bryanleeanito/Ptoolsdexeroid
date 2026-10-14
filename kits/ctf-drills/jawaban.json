@@ -1,0 +1,75 @@
+[
+  {
+    "file": "d1_b64.txt",
+    "flag": "flag{decoder_base64_tingkat1}",
+    "kategori": "decoder",
+    "catatan": "b64 polos"
+  },
+  {
+    "file": "d2_rot_b64.txt",
+    "flag": "flag{decoder_rot13_lalu_b64}",
+    "kategori": "decoder",
+    "catatan": "rot13 -> b64"
+  },
+  {
+    "file": "d3_caesar_b64.txt",
+    "flag": "flag{decoder_caesar7_b64}",
+    "kategori": "decoder",
+    "catatan": "caesar k=7 -> b64"
+  },
+  {
+    "file": "d4_b64_hex.txt",
+    "flag": "flag{decoder_b64_lalu_hex}",
+    "kategori": "decoder",
+    "catatan": "b64 -> hex"
+  },
+  {
+    "file": "c1_caesar.txt",
+    "flag": "flag{caesar_kunci_13}",
+    "kategori": "crypto",
+    "catatan": "caesar k=13"
+  },
+  {
+    "file": "c2_vigenere.txt",
+    "flag": "flag{vigenere_merdeka}",
+    "kategori": "crypto",
+    "catatan": "vigenere key=merdeka (decrypt: classics.py vigenere '<teks>' --key merdeka)",
+    "kunci": "merdeka"
+  },
+  {
+    "file": "c3_xor.txt",
+    "flag": "flag{xor_byte_tunggal}",
+    "kategori": "crypto",
+    "catatan": "xor 1 byte (hex)"
+  },
+  {
+    "file": "c4_railfence.txt",
+    "flag": "flag{railfence_r3}",
+    "kategori": "crypto",
+    "catatan": "rail fence k=3"
+  },
+  {
+    "file": "f1_komentar.png",
+    "flag": "flag{png_teks_tersembunyi}",
+    "kategori": "forensics",
+    "catatan": "chunk tEXt PNG"
+  },
+  {
+    "file": "f2_zip_komen.zip",
+    "flag": "flag{zip_komen_aneh}",
+    "kategori": "forensics",
+    "catatan": "komentar zip"
+  },
+  {
+    "file": "f3_nyempil.png",
+    "flag": "flag{data_nyempil_belakang}",
+    "kategori": "forensics",
+    "catatan": "data setelah IEND"
+  },
+  {
+    "file": "f4_spasi.txt",
+    "flag": "flag{whitespace_morse_biner}",
+    "kategori": "forensics",
+    "catatan": "spasi=0 tab=1"
+  }
+]
