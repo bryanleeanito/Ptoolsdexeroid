@@ -225,7 +225,7 @@ def t_tolak_max_layer_ngawur():
 
 def t_tolak_tanpa_input():
     out = jalankan_decode([])
-    if "butuh argumen teks atau --in FILE" not in out:
+    if "butuh argumen teks" not in out:
         return f"tak menolak input kosong: {out[-160:]}"
     return True
 

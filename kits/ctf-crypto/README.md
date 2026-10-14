@@ -25,4 +25,8 @@ python3 rsa.py --n N --factordb
 python3 rsa.py --pairs p1.json p2.json    # common-modulus / Hastad
 ```
 
+Catatan: mode cepat `--caesar`/`--xor`/`--vigenere` (key diketahui) juga ada
+di `ctf-decoder/decode.py` — pakai classics.py kalau butuh vigenere tebak
+panjang kunci (IOC) atau substitution hill-climb.
+
 Verifikasi lokal: caesar ✓ xor ✓ vigenere ✓ rsa small-e ✓ fermat ✓ wiener ✓

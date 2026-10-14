@@ -105,7 +105,7 @@ Semua kategori kecakup: web, OSINT, crypto, forensics, misc/encoding, pwn/rev.
 
 | Kit | Fungsi | Verifikasi |
 |---|---|---|
-| `ctf-decoder` | chain decode 14 jenis (base64/32/58/62/85, hex, url, rot13, atbash, reverse, binary, morse, xor) + auto-flag + hashid | **E2E ✓** rantai base64→rot13 kebaca |
+| `ctf-decoder` | pembongkar lapisan encoding: 17 decoder (base64/32/58/62/85, hex, url, morse, rot13, …) + skor+flag-ketat stop, `--caesar`/`--xor`/`--vigenere`, `--hashid`, 18 tes E2E, CHEATSHEET | **E2E ✓ 18/18 tes** (merge ctf-kit Tab Sekolah + fitur Tab Rumah) |
 | `ctf-crypto` | caesar/vigenere(xor/subst hill-climb) + RSA solver (small-e, Fermat, Wiener, common-modulus, Hastad, factordb) | **E2E ✓** caesar/xor/vigenere/small-e/fermat/wiener |
 | `ctf-forensics` | magic 40+ format, entropi, EXIF+GPS detect, chunk PNG, hidden-data setelah IEND/FFD9/trailer, ZIP/PDF | **E2E ✓** after-IEND + tEXt + zip comment |
 | `ctf-web` | header+keamanan, JWT auto-decode, comment/form/hidden, leak path scan, --js endpoint+key | smoke lokal ✓ |

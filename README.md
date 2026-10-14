@@ -18,7 +18,7 @@ kits/
 ├── secret-scanner/  v1.0  — cari secret ter-hardcode di semua dump (E2E ✓)
 ├── report-packer/   v1.0  — rangkai output semua kit jadi 1 laporan (E2E ✓)
 ├── target-inventory/v1.0  — katalog target + generator scope.txt (E2E ✓)
-├── ctf-decoder/     v1.0  — chain decoder 14 jenis + auto-flag (E2E ✓)
+├── ctf-decoder/     v1.0  — pembongkar lapisan encoding 17 jenis + 18 tes (E2E ✓)
 ├── ctf-crypto/      v1.0  — cipher klasik + RSA solver 6 serangan (E2E ✓)
 ├── ctf-forensics/   v1.0  — magic/EXIF/chunk/hidden-data scanner (E2E ✓)
 ├── ctf-web/         v1.0  — recon web jeorpadic: header/JWT/leak path (E2E ✓)
