@@ -17,7 +17,12 @@ kits/
 ├── hosting-tester/  v1.0  — tester cPanel & FTP, deteksi lockout (E2E ✓)
 ├── secret-scanner/  v1.0  — cari secret ter-hardcode di semua dump (E2E ✓)
 ├── report-packer/   v1.0  — rangkai output semua kit jadi 1 laporan (E2E ✓)
-└── target-inventory/v1.0  — katalog target + generator scope.txt (E2E ✓)
+├── target-inventory/v1.0  — katalog target + generator scope.txt (E2E ✓)
+├── ctf-decoder/     v1.0  — chain decoder 14 jenis + auto-flag (E2E ✓)
+├── ctf-crypto/      v1.0  — cipher klasik + RSA solver 6 serangan (E2E ✓)
+├── ctf-forensics/   v1.0  — magic/EXIF/chunk/hidden-data scanner (E2E ✓)
+├── ctf-web/         v1.0  — recon web jeorpadic: header/JWT/leak path (E2E ✓)
+└── ctf-pwn/         v1.0  — checklist + prep script BlackArch (pwntools/gdb/r2)
 HANDOFF.md             — status antar mesin + wish-list input
 ```
 
@@ -48,6 +53,11 @@ python3 "kits/osint-kzldx/osint.py" --help
 
 ## Changelog
 
+- **2026-10-14** — tambah 5 kit CTF buat lomba jeorpadic online: `ctf-decoder`
+  (chain decode 14 jenis), `ctf-crypto` (caesar/vigenere/xor/subst + RSA
+  small-e/fermat/wiener/common-modulus/Hastad/factordb), `ctf-forensics`
+  (magic/EXIF/chunk PNG/hidden-data), `ctf-web` (recon header/JWT/leak path),
+  `ctf-pwn` (checklist + prep BlackArch).
 - **2026-10-13** — tambah `target-inventory` (scope.txt jadi build artifact).
 - **2026-10-13** — tambah `report-packer` (agregasi laporan lintas kit).
 - **2026-10-13** — tambah `secret-scanner` (10 pola deteksi, redact by default), `wp-recon`, `hosting-tester`, `crack_helper`. Playwright MCP beres.

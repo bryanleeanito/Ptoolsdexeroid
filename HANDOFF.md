@@ -1,6 +1,6 @@
 # HANDOFF.md — status antar mesin
 
-Diperbarui: 2026-10-12 (Tab Rumah)
+Diperbarui: 2026-10-14 (Tab Rumah)
 
 ## Mesin
 
@@ -10,7 +10,7 @@ Diperbarui: 2026-10-12 (Tab Rumah)
 |---|---|---|
 | Tab Rumah (box ini) | analisa, OSINT, source-code review, build toolkit | aktif |
 | Tab Sekolah | build tools/bypass/payload/exploit di lapangan | kamu |
-| BlackArch (ThinkPad L14 G2, Ryzen 5 PRO) | eksekusi aktif, scanning, cracking | **login loop** ⚠️ |
+| BlackArch (ThinkPad L14 G2, Ryzen 5 PRO) | eksekusi aktif, scanning, cracking, pwn | ✅ **FIX** (2026-10-11) |
 
 ## Yang sudah jadi (bisa dipakai sekarang)
 
@@ -77,12 +77,60 @@ Catatan: MCP **memblokir skema `file://`** — uji lokal harus lewat http(s).
 Findings: `Fmwf4h883r6y9` (executable-path) + `Fmv64sfpbcqku` (--no-sandbox).
 
 
-## Blocker BlackArch
+## Target lomba — PLAY IT! PLUS CTF (nasional, daring)
 
-Login loop setelah password benar → balik ke layar login. Kemungkinan sisa otak-atik
-`xorg`/`lightdm` waktu benerin VNC+RDP kemarin. Butuh dari TTY:
+| Milestone | Tanggal |
+|---|---|
+| Deadline pendaftaran | 09 Nov 2026 (Rp25k/orang, tim 3-5 orang, daftar: bit.ly/CTFPLAYITPLUS) |
+| Technical meeting | 10 Nov 2026 |
+| **Babak Penyisihan (Jeopardy)** | **14 Nov 2026** |
+| Final Day & Awards | 28 Nov 2026 (kemungkinan Attack & Defense) |
 
-```bash
-tail -40 ~/.xsession-errors
-find /etc/X11 /etc/lightdm ~/.xinitrc ~/.vnc -type f -newermt '2 days ago' 2>/dev/null
+Kategori: Web, Crypto, Forensics, Reverse, Binary — semua tercakup kit di atas.
+
+Rencana latihan (prioritas bobot soal jeorpadic umum):
+1. **Crypto+decoder** (cepat poin): cryptohack.org + kit sendiri
+2. **Web** (bobot terbesar): PortSwigger Academy (SQLi/LFI/SSTI/IDOR) + lab DVWA
+3. **Forensics**: zsteg/steghide/binwalk di BlackArch + writeup CTFtime
+4. **Pwn**: ret2win → ret2libc → fmt string (pwnable.kr / overthewire)
+5. **Reverse**: r2 basic → crackme sederhana
+6. **H-3**: simulasi soal jeorpadic lama (CTFtime past events) + rapikan infra
+
+Untuk final A&D (kalau jadi): siapkan kemampuan patching service (audit
+source → fix) + exploit service tim lain (sama pakai kit web/pwn yang ada).
+
+## CTF kits — persiapan lomba jeorpadic online (2026-10-14)
+
+Semua kategori kecakup: web, OSINT, crypto, forensics, misc/encoding, pwn/rev.
+
+| Kit | Fungsi | Verifikasi |
+|---|---|---|
+| `ctf-decoder` | chain decode 14 jenis (base64/32/58/62/85, hex, url, rot13, atbash, reverse, binary, morse, xor) + auto-flag + hashid | **E2E ✓** rantai base64→rot13 kebaca |
+| `ctf-crypto` | caesar/vigenere(xor/subst hill-climb) + RSA solver (small-e, Fermat, Wiener, common-modulus, Hastad, factordb) | **E2E ✓** caesar/xor/vigenere/small-e/fermat/wiener |
+| `ctf-forensics` | magic 40+ format, entropi, EXIF+GPS detect, chunk PNG, hidden-data setelah IEND/FFD9/trailer, ZIP/PDF | **E2E ✓** after-IEND + tEXt + zip comment |
+| `ctf-web` | header+keamanan, JWT auto-decode, comment/form/hidden, leak path scan, --js endpoint+key | smoke lokal ✓ |
+| `ctf-pwn` | checklist workflow + `prep_blackarch.sh` (pwntools/gdb/ropper/one_gadget/r2) | jalankan di BlackArch saat ada internet |
+
+Rantai kerja jeorpadic:
 ```
+soal misc ──── ctf-decoder (decode sampai flag)
+soal crypto ── ctf-crypto classics → rsa.py --n/--e/--c → factordb
+soal web ───── ctf-web recon → (manual: Burp/ffuf SQLi/LFI/SSTI)
+soal forensic ─ ctf-forensics probe --all → (stego berat: blackarch zsteg/steghide)
+soal pwn ───── prep_blackarch.sh sekali → gdb/pwntools/r2 di BlackArch
+soal osint ─── osint-kzldx (sudah matang)
+```
+
+Catatan: `--factordb` butuh internet; sisanya offline semua.
+
+## Status BlackArch — ✅ SELESAI (2026-10-11)
+
+Dua masalah berurutan sudah beres lewat pipeline copy-partisi→fix→restore:
+1. **Login loop** (9–10 Okt): session cache XFCE corrupt + `.dmrc` salah →
+   dibersihkan, **i3 dipasang** sebagai session utama.
+2. **SDDM mati** (11 Okt): partial upgrade Qt6 (base 6.12 vs declarative 6.11 →
+   `libQt6Qml.so.6: undefined symbol`, status=127) → 7 paket Qt6 di-sejajarkan
+   ke 6.12.0-1, fprintd dimask. Verifikasi 22/22 sample MD5.
+
+Aturan anti-ulang: **jangan `pacman -Sy <paket>`** — selalu `pacman -Syu` dulu
+(full update) baru install, atau `pacman -Syu <paket>` sekali jalan.
