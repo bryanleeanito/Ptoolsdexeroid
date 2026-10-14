@@ -25,3 +25,7 @@ __pycache__/
 .DS_Store
 Thumbs.db
 *.bak*
+
+# ⛔ session/solver artifacts 🙅
+kits/ctfd-solver/.cookies
+kits/ctfd-solver/files/

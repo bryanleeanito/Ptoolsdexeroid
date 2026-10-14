@@ -110,6 +110,12 @@ Semua kategori kecakup: web, OSINT, crypto, forensics, misc/encoding, pwn/rev.
 | `ctf-forensics` | magic 40+ format, entropi, EXIF+GPS detect, chunk PNG, hidden-data setelah IEND/FFD9/trailer, ZIP/PDF | **E2E ✓** after-IEND + tEXt + zip comment |
 | `ctf-web` | header+keamanan, JWT auto-decode, comment/form/hidden, leak path scan, --js endpoint+key | smoke lokal ✓ |
 | `ctf-pwn` | checklist workflow + `prep_blackarch.sh` (pwntools/gdb/ropper/one_gadget/r2) | jalankan di BlackArch saat ada internet |
+| `ctfd-solver` | solver CTFd universal: login (token/form+nonce), list, fetch attachment, sweep flags.json, autosolve rantai-decode | **E2E mock 6/6 ✓** |
+
+Target aktif: **ctf.smkpgri3malang.web.id** (akun leeanito, peringkat 3).
+⚠️ 2026-10-14: situsnya 500 di route login/HTML (API scoreboard jalan) —
+server-side bug, lapor panitia. Solver sudah siap begitu balik:
+`export CTF_URL=... CTF_USER=leeanito CTF_PASS=...` lalu `python3 ctfd.py list`.
 
 Rantai kerja jeorpadic:
 ```

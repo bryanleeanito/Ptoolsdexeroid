@@ -22,7 +22,8 @@ kits/
 ├── ctf-crypto/      v1.0  — cipher klasik + RSA solver 6 serangan (E2E ✓)
 ├── ctf-forensics/   v1.0  — magic/EXIF/chunk/hidden-data scanner (E2E ✓)
 ├── ctf-web/         v1.0  — recon web jeorpadic: header/JWT/leak path (E2E ✓)
-└── ctf-pwn/         v1.0  — checklist + prep script BlackArch (pwntools/gdb/r2)
+├── ctf-pwn/         v1.0  — checklist + prep script BlackArch (pwntools/gdb/r2)
+└── ctfd-solver/     v1.0  — solver CTFd API: login/list/fetch/sweep/autosolve (E2E mock ✓)
 HANDOFF.md             — status antar mesin + wish-list input
 ```
 
@@ -53,6 +54,9 @@ python3 "kits/osint-kzldx/osint.py" --help
 
 ## Changelog
 
+- **2026-10-14** — tambah `ctfd-solver` (login form+nonce & token API, list,
+  fetch, sweep flags.json, autosolve rantai-decode; E2E mock 6/6). Merge
+  `ctf-kit` → `ctf-decoder`.
 - **2026-10-14** — tambah 5 kit CTF buat lomba jeorpadic online: `ctf-decoder`
   (chain decode 14 jenis), `ctf-crypto` (caesar/vigenere/xor/subst + RSA
   small-e/fermat/wiener/common-modulus/Hastad/factordb), `ctf-forensics`
