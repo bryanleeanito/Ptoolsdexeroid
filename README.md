@@ -27,6 +27,14 @@ kits/
 ├── ctf-drills/      v1.0  — 12 drill latihan + kunci (12/12 terverifikasi kit)
 ├── crypto-specialist/ v1.0 — RSA keygen/5 attacks + AES + classical + hash crack (E2E ✓)
 ├── rev-specialist/    v1.0 — Ghidra gen + binary patch + protocol analyzer + anti-detect (E2E ✓)
+├── waf-bypass/        v1.0  — WAF bypass: encoding, headers, chunked, JSON, HPP (E2E ✓)
+├── cloudflare-bypass/ v1.0  — CF bypass: origin IP, header, chunked, cache, direct (E2E ✓)
+├── elementor-bypass/  v1.0  — Elementor: REST, template, form, upload, auth bypass (E2E ✓)
+├── ip-changer/        v1.0  — IP rotator: proxy, source spoof, geo, MAC (E2E ✓)
+├── ip-anti-lock/      v1.0  — Anti-lockout: delay, rotate, headers, session (E2E ✓)
+├── defense-counter/   v1.0  — WAF/IDS evasion, rate limit, CAPTCHA, 2FA (E2E ✓)
+├── webshell-manager/  v1.0  — Webshell: detect, obfuscate, generate, manage (E2E ✓)
+├── payload-generator/ v1.0  — Payload: PHP/ASPX/JSP/Python + reverse shell (E2E ✓)
 ├── jwt-toolkit/      v1.0  — decode/verify/forge/crack JWT + attack analyzer (E2E ✓)
 ├── rev-toolkit/      v1.0  — strings/ELF parse/patch template/r2gen/UPX detect (E2E ✓)
 ├── sqli-helper/      v1.0  — SQLi probe/blind/tamper/union column counter (E2E ✓)
@@ -64,6 +72,7 @@ python3 "kits/osint-kzldx/osint.py" --help
 
 ## Changelog
 
+- **2026-10-16** — tambah 8 kit bypass & payload: `waf-bypass`, `cloudflare-bypass`, `elementor-bypass`, `ip-changer`, `ip-anti-lock`, `defense-counter`, `webshell-manager`, `payload-generator`. Total 32 kit.
 - **2026-10-16** — tambah 2 kit specialist: `crypto-specialist` (RSA keygen/5 attacks + AES + classical + hash crack), `rev-specialist` (Ghidra gen + binary patch + protocol analyzer + anti-detect). Total 24 kit.
 - **2026-10-16** — tambah 5 kit: `jwt-toolkit` (decode/verify/forge/crack JWT + attack analyzer), `rev-toolkit` (strings/ELF/patch/r2gen/UPX), `sqli-helper` (probe/blind/tamper/union), `idor-scanner` (enumerate/diff/pattern), `ctf-misc-solver` (auto-classifier + hashid + XOR). Total 22 kit.
 - **2026-10-14** — tambah `ctf-drills` (12 soal latihan + kunci, verifikasi

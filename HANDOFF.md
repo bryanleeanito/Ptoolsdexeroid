@@ -174,6 +174,30 @@ Catatan:
 - `rev-specialist` patch = auto-backup `.bak` sebelum overwrite.
 - AES butuh `pip install pycryptodome` — di BlackArch atau box ini.
 
+## Kit bypass & payload (2026-10-16) — WAF, CF, Elementor, IP, Defense
+
+| Kit | Fungsi | Verifikasi |
+|---|---|---|
+| `waf-bypass` | 12 encoding evasion (URL, hex, unicode, double, mixed, space2comment, html-entities, overlong-utf8) · header injection (X-Forwarded-For, X-Real-IP, bot UA) · chunked transfer · JSON/XML body · HTTP parameter pollution | **E2E ✓ 10/10 tes** |
+| `cloudflare-bypass` | Origin IP discovery (DNS history, censys, SSL) · header bypass (CF-Connecting-IP, True-Client-IP) · chunked · cache poisoning/deception · direct IP access | **E2E ✓ 5/5 tes** |
+| `elementor-bypass` | REST API abuse (CPT, template, form) · template injection & render · form AJAX bypass · file upload (double ext, null byte, magic bytes) · auth bypass (nonce, privilege escalation) | **E2E ✓ 5/5 tes** |
+| `ip-changer` | Proxy rotation (Tor NEWNYM, SOCKS5, HTTP) · source IP spoof (header injection) · geo IP changer · MAC address changer · IP check | **E2E ✓ 6/6 tes** |
+| `ip-anti-lock` | Exponential backoff + jitter · IP rotation schedule · header rotation (UA, Accept, Lang) · session rotation · browser fingerprint rotation | **E2E ✓ 5/5 tes** |
+| `defense-counter` | WAF detection (CF, Akamai, Imperva, AWS, Sucuri, Barracuda, F5, Fortinet) · IDS evasion (fragmentation, decoy, timing) · rate limit bypass · CAPTCHA detection · 2FA bypass | **E2E ✓ 5/5 tes** |
+| `webshell-manager` | Detection (PHP, ASPX, JSP, Python signatures) · obfuscation (base64, hex, rot13, gzip) · generation (PHP, ASPX, JSP, Python) · management · cleanup | **E2E ✓ 8/8 tes** |
+| `payload-generator` | PHP/ASPX/JSP/Python payloads (command, eval, shell, file, backdoor) · reverse shell (bash, python, php, netcat, perl, ruby, powershell) · encoding (base64, hex, url, unicode, html, octal, binary) · obfuscation (comment, case, variable, concat, hex-var) | **E2E ✓ 15/15 tes** |
+
+Rantai bypass penuh:
+```
+WAF ────────── waf-bypass (encoding + headers + chunked) → defense-counter (WAF fingerprint + evasion)
+Cloudflare ─── cloudflare-bypass (origin IP + direct) → cf-bypass (cache + smuggling)
+Elementor ──── elementor-bypass (REST + template + form + upload)
+IP/IP ──────── ip-changer (rotate + spoof + geo) → ip-anti-lock (delay + rotate + fingerprint)
+Shell ──────── payload-generator (reverse shell + encode) → webshell-manager (detect + obfuscate + manage)
+```
+
+Total repo: **32 kit**, semua E2E verified.
+
 ## Status BlackArch — ✅ SELESAI (2026-10-11)
 
 Dua masalah berurutan sudah beres lewat pipeline copy-partisi→fix→restore:
