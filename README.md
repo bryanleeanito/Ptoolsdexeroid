@@ -25,6 +25,8 @@ kits/
 ├── ctf-pwn/         v1.0  — checklist + prep script BlackArch (pwntools/gdb/r2)
 ├── ctfd-solver/     v1.0  — solver CTFd API: login/list/fetch/sweep/autosolve (E2E mock ✓)
 ├── ctf-drills/      v1.0  — 12 drill latihan + kunci (12/12 terverifikasi kit)
+├── crypto-specialist/ v1.0 — RSA keygen/5 attacks + AES + classical + hash crack (E2E ✓)
+├── rev-specialist/    v1.0 — Ghidra gen + binary patch + protocol analyzer + anti-detect (E2E ✓)
 ├── jwt-toolkit/      v1.0  — decode/verify/forge/crack JWT + attack analyzer (E2E ✓)
 ├── rev-toolkit/      v1.0  — strings/ELF parse/patch template/r2gen/UPX detect (E2E ✓)
 ├── sqli-helper/      v1.0  — SQLi probe/blind/tamper/union column counter (E2E ✓)
