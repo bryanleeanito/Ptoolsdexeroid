@@ -196,7 +196,27 @@ IP/IP ──────── ip-changer (rotate + spoof + geo) → ip-anti-loc
 Shell ──────── payload-generator (reverse shell + encode) → webshell-manager (detect + obfuscate + manage)
 ```
 
-Total repo: **32 kit**, semua E2E verified.
+Total repo: **33 kit**, semua E2E verified.
+
+## Kit OSINT (2026-10-16) — Sherlock
+
+| Kit | Fungsi | Verifikasi |
+|---|---|---|
+| `sherlock-osint` | Username search (43 platform) · email OSINT (breach, reputation, gravatar) · phone OSINT (carrier, messaging, reverse lookup) · domain OSINT (DNS, WHOIS, subdomain, tech stack) · social media profiling · correlation engine (cross-reference username/email/phone/domain) · report generator | **E2E ✓ 7/7 tes** |
+
+Correlation engine:
+- Cross-reference username ↔ email ↔ phone ↔ domain
+- Deteksi pola: email local part = username, phone suffix = username, username in domain
+- Generate profil konsolidat
+
+Social engineering clues:
+- Profile picture → Google reverse image
+- Bio/description → lokasi, pekerjaan, interest
+- Posts → rutinitas, lokasi, kontak
+- Friends/followers → jaringan sosial
+- Tagged photos → lokasi, aktivitas
+- Check-ins → lokasi favorit
+- Hashtags → interest, komunitas
 
 ## Status BlackArch — ✅ SELESAI (2026-10-11)
 
