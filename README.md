@@ -41,7 +41,6 @@ kits/
 ├── sqli-helper/      v1.0  — SQLi probe/blind/tamper/union column counter (E2E ✓)
 ├── idor-scanner/     v1.0  — IDOR/BOLA enumerate/diff/pattern detector (E2E ✓)
 ├── ctf-misc-solver/  v1.0  — auto-classifier 7 encoding + hashid + XOR brute (E2E ✓)
-├── crypto-specialist/ v1.0 — RSA keygen/5 attacks + AES + classical + hash crack (E2E ✓)
 └── rev-specialist/    v1.0  — Ghidra gen + binary patch + protocol analyzer + anti-detect (E2E ✓)
 HANDOFF.md             — status antar mesin + wish-list input
 ```
@@ -73,6 +72,7 @@ python3 "kits/osint-kzldx/osint.py" --help
 
 ## Changelog
 
+- **2026-10-16** — tambah 3 kit: `security-protect` (defensive security), `extreme-efficiency` v2 (T14s G1 tuned: Ryzen 5 PRO 4650U 6C/12T, 16GB RAM), `firewall-bypass` (fragmentation, tunneling, evasion). Fix bug `classics.py` (NameError: decrypt) yang bikin ctf-crypto crash + ctf-drills fail. Fix false positive regex webshell-manager. Total 35 kit.
 - **2026-10-16** — tambah `sherlock-osint` (OSINT investigation: username/email/phone/domain + correlation engine + report generator). Total 33 kit.
 - **2026-10-16** — tambah 8 kit bypass & payload: `waf-bypass`, `cloudflare-bypass`, `elementor-bypass`, `ip-changer`, `ip-anti-lock`, `defense-counter`, `webshell-manager`, `payload-generator`. Total 32 kit.
 - **2026-10-16** — tambah 2 kit specialist: `crypto-specialist` (RSA keygen/5 attacks + AES + classical + hash crack), `rev-specialist` (Ghidra gen + binary patch + protocol analyzer + anti-detect). Total 24 kit.

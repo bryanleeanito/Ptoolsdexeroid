@@ -34,7 +34,6 @@ WEBSHELL_SIGNATURES = {
         r"create_function\s*\(",
         r"move_uploaded_file\s*\(",
         r"\\x[0-9a-f]{2}",
-        r"<\?php.*\?>",
     ],
     "aspx": [
         r"eval\s*\(",

@@ -173,6 +173,25 @@ Catatan:
 - `crypto-specialist` RSA = **stdlib only** (no PyCryptodome dependency buat RSA).
 - `rev-specialist` patch = auto-backup `.bak` sebelum overwrite.
 - AES butuh `pip install pycryptodome` — di BlackArch atau box ini.
+- `classics.py` vigenere: fixed NameError `decrypt` → `geser == -1` (2026-10-16).
+
+## Kit defensive & efficiency (2026-10-16)
+
+| Kit | Fungsi | Verifikasi |
+|---|---|---|
+| `security-protect` | Security headers (CSP, HSTS, X-Frame) · audit file permission · OS hardening (3 level) · firewall rules (iptables/nftables/UFW) · log monitoring · backup & integrity | **E2E ✓ 7/7 tes** |
+| `extreme-efficiency` v2 | T14s G1 tuned (Ryzen 5 PRO 4650U 6C/12T, 16GB) · parallel execution (auto-detect core) · cache system · auto-chain · preset (stealth/balanced/max) · minimize resource · monitor · schedule | **E2E ✓ 11/11 tes** |
+| `firewall-bypass` | 8 bypass method (fragmentation, decoy, source port, MAC spoof, badsum, data length, TTL, window) · tunneling (DNS, ICMP, HTTP, SSH) · packet evasion · protocol abuse (DNS, ICMP, HTTP, SMTP) · firewall test | **E2E ✓ 8/8 tes** |
+
+Extreme efficiency presets (T14s G1):
+
+| Preset | Use Case | nmap | nuclei | ffuf | RAM limit |
+|---|---|---|---|---|---|
+| stealth | Recon pasif, anti-detection | -T2, rate 50 | -c 4, rl 20 | -t 6 | 512 MB |
+| balanced | Default daily | -T3, rate 200 | -c 8, rl 50 | -t 12 | 2 GB |
+| max | Lab/offline target | -T4, rate 1000 | -c 12, rl 150 | -t 24 | 8 GB |
+
+Total repo: **35 kit**.
 
 ## Kit bypass & payload (2026-10-16) — WAF, CF, Elementor, IP, Defense
 
