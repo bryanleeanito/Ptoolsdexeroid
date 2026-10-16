@@ -24,7 +24,12 @@ kits/
 ├── ctf-web/         v1.0  — recon web jeorpadic: header/JWT/leak path (E2E ✓)
 ├── ctf-pwn/         v1.0  — checklist + prep script BlackArch (pwntools/gdb/r2)
 ├── ctfd-solver/     v1.0  — solver CTFd API: login/list/fetch/sweep/autosolve (E2E mock ✓)
-└── ctf-drills/      v1.0  — 12 drill latihan + kunci (12/12 terverifikasi kit)
+├── ctf-drills/      v1.0  — 12 drill latihan + kunci (12/12 terverifikasi kit)
+├── jwt-toolkit/      v1.0  — decode/verify/forge/crack JWT + attack analyzer (E2E ✓)
+├── rev-toolkit/      v1.0  — strings/ELF parse/patch template/r2gen/UPX detect (E2E ✓)
+├── sqli-helper/      v1.0  — SQLi probe/blind/tamper/union column counter (E2E ✓)
+├── idor-scanner/     v1.0  — IDOR/BOLA enumerate/diff/pattern detector (E2E ✓)
+└── ctf-misc-solver/  v1.0  — auto-classifier 7 encoding + hashid + XOR brute (E2E ✓)
 HANDOFF.md             — status antar mesin + wish-list input
 ```
 
@@ -55,6 +60,8 @@ python3 "kits/osint-kzldx/osint.py" --help
 
 ## Changelog
 
+- **2026-10-16** — tambah 2 kit specialist: `crypto-specialist` (RSA keygen/5 attacks + AES + classical + hash crack), `rev-specialist` (Ghidra gen + binary patch + protocol analyzer + anti-detect). Total 24 kit.
+- **2026-10-16** — tambah 5 kit: `jwt-toolkit` (decode/verify/forge/crack JWT + attack analyzer), `rev-toolkit` (strings/ELF/patch/r2gen/UPX), `sqli-helper` (probe/blind/tamper/union), `idor-scanner` (enumerate/diff/pattern), `ctf-misc-solver` (auto-classifier + hashid + XOR). Total 22 kit.
 - **2026-10-14** — tambah `ctf-drills` (12 soal latihan + kunci, verifikasi
   otomatis 12/12). Perbaikan nyata dari latihan: `decode.py` (FLAG_KETAT
   deteksi `flag` setelah underscore; rantai STOP kalau input sudah berflag;

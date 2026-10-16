@@ -163,6 +163,60 @@ def at_phi(n, p, q, e, c):
     print(f"[*] DEKrip dengan p,q: d={d}")
     return print_flag(m, "pq")
 
+def at_common_factor(ns):
+    """gcd antar MODULUS berbeda — beda dari common-modulus.
+
+    common-modulus = n sama, e beda (Bezout). Ini n BERBEDA yang ternyata
+    berbagi satu prima yang sama (kesalahan umum: kunci dibuat dari p yang
+    dipakai ulang). Begitu ketemu gcd, n langsung pecah.
+    """
+    temuan = False
+    for i in range(len(ns)):
+        for j in range(i + 1, len(ns)):
+            g = math.gcd(ns[i], ns[j])
+            if g > 1 and g < ns[i]:
+                temuan = True
+                print(f"[*] COMMON-FACTOR: gcd(n{i+1}, n{j+1}) = {g}")
+                print(f"    n{i+1} = {g} x {ns[i] // g}")
+                print(f"    n{j+1} = {g} x {ns[j] // g}")
+    return temuan
+
+
+def at_pollard_p1(n, batas=100000):
+    """Pollard p-1: p-1 hanya berfaktor halus.
+
+    Berhasil kalau semua faktor prima p-1 lebih kecil dari `batas` (B).
+    Bukan serangan universal — tapi gratis utk dicoba dan sering menang pada
+    soal yang prima-nya dibangkitkan sembarangan.
+    """
+    if n % 2 == 0:
+        print(f"[*] P-1: n genap -> p=2, q={n // 2}")
+        return 2
+    # sieve prima sampai B
+    sieve = bytearray(b"\x01") * (batas + 1)
+    for i in range(2, int(batas ** 0.5) + 1):
+        if sieve[i]:
+            sieve[i * i::i] = bytearray(len(sieve[i * i::i]))
+    a = 2
+    for p in range(2, batas + 1):
+        if not sieve[p]:
+            continue
+        pp = p
+        while pp * p <= batas:
+            pp *= p
+        a = pow(a, pp, n)
+        if p % 512 == 0:           # cek berkala saja, hemat gcd
+            g = math.gcd(a - 1, n)
+            if 1 < g < n:
+                print(f"[*] P-1: p-1 halus ketemu (B={batas}) -> p={g}, q={n // g}")
+                return g
+    g = math.gcd(a - 1, n)
+    if 1 < g < n:
+        print(f"[*] P-1: p-1 halus ketemu (B={batas}) -> p={g}, q={n // g}")
+        return g
+    print(f"[i] P-1 zonk (B={batas}). Naikkan --p1-bound, atau p-1 punya faktor besar.")
+    return None
+
 def at_factordb(n):
     """Lookup factordb.com (butuh internet, pasif)."""
     url = f"http://factordb.com/api?query={n}"

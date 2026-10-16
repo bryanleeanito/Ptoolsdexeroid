@@ -141,6 +141,27 @@ soal osint ─── osint-kzldx (sudah matang)
 
 Catatan: `--factordb` butuh internet; sisanya offline semua.
 
+## Kit baru (2026-10-16) — kelengkapan CTF
+
+| Kit | Fungsi | Verifikasi |
+|---|---|---|
+| `jwt-toolkit` | decode/verify/forge JWT (none-alg, HS256) · crack secret dari wordlist · attack analyzer (alg=none, weak secret, kid path traversal, kid injection, jku/x5u, exp check) | **E2E ✓ 8/8 tes** |
+| `rev-toolkit` | strings (min length config) · ELF header parse (arch/endian/entry) · patch template (NOP/jump/shellcode) · r2gen (radare2 script otomatis) · UPX detect+unpack | **E2E ✓ 7/7 tes** |
+| `sqli-helper` | probe error-based (18 signature DB) · time-based blind (benchmark+threshold) · tamper (10+ evasion variants) · UNION column counter | **E2E ✓ 6/6 tes** |
+| `idor-scanner` | enumerate ID range + deteksi response berbeda · diff 2 user (unified diff) · pattern detector (sequential/UUID/hash) | **E2E ✓ 4/4 tes** |
+| `ctf-misc-solver` | classify (base64/32, hex, url, rot13, binary, morse) · auto-solve chain · hashid (length-based) · XOR brute (single-byte, ranked) | **E2E ✓ 9/9 tes** |
+
+Rantai kerja CTF penuh:
+```
+soal web ───── jwt-toolkit (decode/forge) → sqli-helper (probe/blind) → idor-scanner (enumerate)
+soal rev ───── rev-toolkit (strings/elf → r2gen → BlackArch r2)
+soal misc ──── ctf-misc-solver (classify → solve → hashid → xor)
+soal crypto ── ctf-crypto (classics + RSA)
+soal forensic  ctf-forensics (magic/EXIF/chunk/hidden)
+```
+
+Total repo: **22 kit**, semua E2E verified.
+
 ## Status BlackArch — ✅ SELESAI (2026-10-11)
 
 Dua masalah berurutan sudah beres lewat pipeline copy-partisi→fix→restore:
