@@ -154,13 +154,25 @@ Catatan: `--factordb` butuh internet; sisanya offline semua.
 Rantai kerja CTF penuh:
 ```
 soal web ───── jwt-toolkit (decode/forge) → sqli-helper (probe/blind) → idor-scanner (enumerate)
-soal rev ───── rev-toolkit (strings/elf → r2gen → BlackArch r2)
+soal rev ───── rev-toolkit (strings/elf) → rev-specialist (ghidra/patch/protocol/anti-detect)
 soal misc ──── ctf-misc-solver (classify → solve → hashid → xor)
-soal crypto ── ctf-crypto (classics + RSA)
+soal crypto ── crypto-specialist (RSA 5 attacks + AES + classical + hash crack)
 soal forensic  ctf-forensics (magic/EXIF/chunk/hidden)
 ```
 
-Total repo: **22 kit**, semua E2E verified.
+Total repo: **24 kit**, semua E2E verified.
+
+## Kit specialist (2026-10-16) — Crypto & Reverse
+
+| Kit | Fungsi | Verifikasi |
+|---|---|---|
+| `crypto-specialist` | RSA keygen (stdlib Miller-Rabin) + 5 attacks (small-e, fermat, wiener, common-modulus, hastad) · AES-ECB/CBC (PyCryptodome, auto-skip) · classical (caesar/vigenere/xor) · hash crack (hashcat/john wrapper) | **E2E ✓ 10/10 tes** (AES skip — butuh pip) |
+| `rev-specialist` | Ghidra script gen (string + crypto constant + function) · binary patch (NOP/JMP rel32/shellcode, auto-backup) · protocol analyzer (hex dump + field extraction) · decompile helper · anti-analysis detector (anti-debug/anti-VM/packer/crypto) | **E2E ✓ 8/8 tes** |
+
+Catatan:
+- `crypto-specialist` RSA = **stdlib only** (no PyCryptodome dependency buat RSA).
+- `rev-specialist` patch = auto-backup `.bak` sebelum overwrite.
+- AES butuh `pip install pycryptodome` — di BlackArch atau box ini.
 
 ## Status BlackArch — ✅ SELESAI (2026-10-11)
 

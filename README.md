@@ -29,7 +29,9 @@ kits/
 ├── rev-toolkit/      v1.0  — strings/ELF parse/patch template/r2gen/UPX detect (E2E ✓)
 ├── sqli-helper/      v1.0  — SQLi probe/blind/tamper/union column counter (E2E ✓)
 ├── idor-scanner/     v1.0  — IDOR/BOLA enumerate/diff/pattern detector (E2E ✓)
-└── ctf-misc-solver/  v1.0  — auto-classifier 7 encoding + hashid + XOR brute (E2E ✓)
+├── ctf-misc-solver/  v1.0  — auto-classifier 7 encoding + hashid + XOR brute (E2E ✓)
+├── crypto-specialist/ v1.0 — RSA keygen/5 attacks + AES + classical + hash crack (E2E ✓)
+└── rev-specialist/    v1.0  — Ghidra gen + binary patch + protocol analyzer + anti-detect (E2E ✓)
 HANDOFF.md             — status antar mesin + wish-list input
 ```
 
