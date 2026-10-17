@@ -1,6 +1,6 @@
 # ctf-drills — paket latihan jeorpadic (soal + kunci)
 
-12 drill otomatis buat latihan sebelum lomba (PLAY IT! PLUS, 14 Nov).
+15 drill otomatis buat latihan sebelum lomba (PLAY IT! PLUS, 14 Nov).
 Semua soal sudah diverifikasi bisa diselesaikan kit Ptoolsdexeroid —
 artinya kalau kamu stuck, tooling-nya pasti BUKAN penyebabnya.
 
@@ -14,6 +14,7 @@ artinya kalau kamu stuck, tooling-nya pasti BUKAN penyebabnya.
    python3 ../ctf-decoder/decode.py --in soal/c1_caesar.txt --caesar
    python3 ../ctf-decoder/decode.py --in soal/c3_xor.txt --xor --hex
    python3 ../ctf-crypto/classics.py vigenere "$(cat soal/c2_vigenere.txt)" --key merdeka
+   python3 ../ctf-crypto/rsa.py --n <n> --e <e> --c <c>   # r1–r3, serang otomatis
    python3 ../ctf-forensics/probe.py soal/f1_komentar.png
    ```
 3. Baru boleh buka `jawaban.json` buat cek.
@@ -30,6 +31,9 @@ artinya kalau kamu stuck, tooling-nya pasti BUKAN penyebabnya.
 | c2_vigenere.txt | crypto | vigenere key=merdeka (decrypt) |
 | c3_xor.txt | crypto | xor 1-byte, input hex |
 | c4_railfence.txt | crypto | rail fence k=3 |
+| r1_small_e.txt | crypto | RSA small-e (m^3 < n → integer root) |
+| r2_fermat.txt | crypto | RSA Fermat (p ~ q) |
+| r3_wiener.txt | crypto | RSA Wiener (d kecil) |
 | f1_komentar.png | forensics | chunk tEXt PNG |
 | f2_zip_komen.zip | forensics | komentar ZIP |
 | f3_nyempil.png | forensics | data setelah IEND |
@@ -45,7 +49,8 @@ python3 verify_drills.py   # buktiin semua masih bisa diselesaikan kit
 ## Rencana 4 minggu (ringkas)
 
 - **Minggu 1**: d1–d4 + c1, c3 — kuasai `decode.py` (auto + `--caesar`/`--xor`).
-- **Minggu 2**: c2, c4 + drill RSA dari `ctf-crypto/rsa.py` (small-e, Fermat).
+- **Minggu 2**: c2, c4 + drill RSA r1–r3 (small-e, Fermat, Wiener —
+  semua otomatis di `ctf-crypto/rsa.py`).
 - **Minggu 3**: f1–f4 — kuasai `probe.py`; lanjut ke `ctf-web/recon_ctf.py`.
 - **Minggu 4**: simulasi — minta teman bikin soal, atau daftar room picoCTF
   / CTFtime buat latihan timing. Jangan lupa `ctf-pwn/prep_blackarch.sh`.

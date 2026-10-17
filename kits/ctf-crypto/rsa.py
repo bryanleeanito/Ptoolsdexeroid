@@ -301,7 +301,10 @@ def main():
         if c is not None:
             at_phi(n, p, q, e, c)
     if c is not None and e:
-        at_wiener(n, e)
+        dw = at_wiener(n, e)
+        if dw:
+            m = pow(c, dw, n)
+            print_flag(m, "wiener")
     if a.factordb:
         at_factordb(n)
     print("[i] selesai. kalau semua serangan zonk: cek padding/skema lain (OAEP, Rabin, Paillier) atau cari leak p di source.")

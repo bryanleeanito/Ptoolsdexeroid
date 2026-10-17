@@ -7,6 +7,7 @@ Jalankan: python3 gen_drills.py
 """
 import base64
 import json
+import math
 import pathlib
 import random
 import struct
@@ -56,6 +57,60 @@ def rail_enc(t, k=3):
 
 def xor_enc(t, key=0x37):
     return bytes(b ^ key for b in t.encode()).hex()
+
+
+# ---------- helper RSA (deterministik, stdlib only) ----------
+
+_PRIMA_KECIL = (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37)
+
+
+def is_prime(n):
+    """Miller-Rabin dengan saksi tetap — cukup untuk drill (bukan kripto produksi)."""
+    if n < 2:
+        return False
+    for p in _PRIMA_KECIL:
+        if n % p == 0:
+            return n == p
+    d, s = n - 1, 0
+    while d % 2 == 0:
+        d //= 2
+        s += 1
+    for a in _PRIMA_KECIL:
+        x = pow(a, d, n)
+        if x in (1, n - 1):
+            continue
+        for _ in range(s - 1):
+            x = x * x % n
+            if x == n - 1:
+                break
+        else:
+            return False
+    return True
+
+
+def rand_prime(bits):
+    while True:
+        n = random.getrandbits(bits) | (1 << (bits - 1)) | 1
+        if is_prime(n):
+            return n
+
+
+def next_prime(n):
+    n += 1 if n % 2 == 0 else 2
+    while not is_prime(n):
+        n += 2
+    return n
+
+
+def flag_ke_m(f):
+    return int.from_bytes(f.encode(), "big")
+
+
+def rsa_file(judul, n, e, c):
+    return (f"# {judul}\n"
+            f"n = {n}\n"
+            f"e = {e}\n"
+            f"c = {c}\n")
 
 
 def chunk(tag, data):
@@ -130,6 +185,47 @@ def main():
     pesan = "kirimdokumenrahasiakepadasiapayangmembaca flag{railfence_r3}"
     simpan("c4_railfence.txt", rail_enc(pesan, 3) + "\n",
            "flag{railfence_r3}", "crypto", "rail fence k=3")
+
+    # ---------- RSA (serangan: ctf-crypto/rsa.py) ----------
+    # r1: small-e — m^e < n tanpa padding -> m = akar-e-integer(c)
+    f = "flag{rsa_small_e_tanpa_padding}"
+    while True:
+        p, q = rand_prime(512), rand_prime(512)
+        if p != q and (p - 1) % 3 and (q - 1) % 3:
+            break
+    n, e = p * q, 3
+    c = pow(flag_ke_m(f), e, n)
+    simpan("r1_small_e.txt",
+           rsa_file("RSA small-e: pesan dipangkatkan 3 tanpa padding", n, e, c),
+           f, "crypto", "rsa small-e: python ../ctf-crypto/rsa.py --n <n> --e 3 --c <c>")
+
+    # r2: Fermat — p dan q berdekatan -> faktorisasi bertingkat
+    f = "flag{rsa_fermat_selisih_kecil}"
+    while True:
+        p = rand_prime(256)
+        q = next_prime(p + random.randrange(1, 1000))
+        if math.gcd(65537, (p - 1) * (q - 1)) == 1:
+            break
+    n, e = p * q, 65537
+    c = pow(flag_ke_m(f), e, n)
+    simpan("r2_fermat.txt",
+           rsa_file("RSA Fermat: n = p*q, p dan q berdekatan", n, e, c),
+           f, "crypto", "rsa fermat: python ../ctf-crypto/rsa.py --n <n> --e 65537 --c <c>")
+
+    # r3: Wiener — d kecil -> pecahan berlanjut e/n
+    f = "flag{rsa_wiener_d_kecil}"
+    while True:
+        p, q = rand_prime(256), rand_prime(256)
+        phi = (p - 1) * (q - 1)
+        d = random.randrange(1 << 31, 1 << 47) | 1
+        if p != q and math.gcd(d, phi) == 1:
+            break
+    e = pow(d, -1, phi)
+    n = p * q
+    c = pow(flag_ke_m(f), e, n)
+    simpan("r3_wiener.txt",
+           rsa_file("RSA Wiener: private exponent d kecil", n, e, c),
+           f, "crypto", "rsa wiener: python ../ctf-crypto/rsa.py --n <n> --e <e> --c <c>")
 
     # ---------- forensics (file beneran) ----------
     f = "flag{png_teks_tersembunyi}"

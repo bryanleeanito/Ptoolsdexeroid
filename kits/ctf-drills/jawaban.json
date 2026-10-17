@@ -49,6 +49,24 @@
     "catatan": "rail fence k=3"
   },
   {
+    "file": "r1_small_e.txt",
+    "flag": "flag{rsa_small_e_tanpa_padding}",
+    "kategori": "crypto",
+    "catatan": "rsa small-e: python ../ctf-crypto/rsa.py --n <n> --e 3 --c <c>"
+  },
+  {
+    "file": "r2_fermat.txt",
+    "flag": "flag{rsa_fermat_selisih_kecil}",
+    "kategori": "crypto",
+    "catatan": "rsa fermat: python ../ctf-crypto/rsa.py --n <n> --e 65537 --c <c>"
+  },
+  {
+    "file": "r3_wiener.txt",
+    "flag": "flag{rsa_wiener_d_kecil}",
+    "kategori": "crypto",
+    "catatan": "rsa wiener: python ../ctf-crypto/rsa.py --n <n> --e <e> --c <c>"
+  },
+  {
     "file": "f1_komentar.png",
     "flag": "flag{png_teks_tersembunyi}",
     "kategori": "forensics",

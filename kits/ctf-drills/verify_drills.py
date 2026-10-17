@@ -6,11 +6,13 @@ Routing per soal sesuai cara main yang diajarkan di README masing-masing:
   c1            -> decode.py --caesar
   c2            -> ctf-crypto/classics.py vigenere (tebak kunci IOC)
   c3            -> decode.py --xor --hex
+  r1..r3        -> ctf-crypto/rsa.py (auto-serang: small-e/Fermat/Wiener)
   f1..f3        -> ctf-forensics/probe.py
 Jalankan setelah gen_drills.py:  python3 verify_drills.py
 """
 import json
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -18,6 +20,7 @@ HERE = pathlib.Path(__file__).parent
 KITS = HERE.parent
 DECODER = KITS / "ctf-decoder" / "decode.py"
 CLASSICS = KITS / "ctf-crypto" / "classics.py"
+RSA = KITS / "ctf-crypto" / "rsa.py"
 PROBE = KITS / "ctf-forensics" / "probe.py"
 JAWABAN = HERE / "jawaban.json"
 SOAL = HERE / "soal"
@@ -53,6 +56,21 @@ def cek_probe(path, flag):
     return flag in _run([str(PROBE), str(path)])
 
 
+def cek_rsa(path, flag):
+    """Parse n/e/c dari file soal -> serang otomatis pakai rsa.py."""
+    kv = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.split("#", 1)[0].strip()
+        m = re.match(r"^([nec])\s*=\s*(\d+)$", line)
+        if m:
+            kv[m.group(1)] = m.group(2)
+    if len(kv) != 3:
+        print(f"    (file RSA tidak lengkap: {sorted(kv)})")
+        return False
+    out = _run([str(RSA), "--n", kv["n"], "--e", kv["e"], "--c", kv["c"]])
+    return flag in out
+
+
 RUTE = {
     "d1_b64.txt": cek_auto,
     "d2_rot_b64.txt": cek_auto,
@@ -62,6 +80,9 @@ RUTE = {
     "c2_vigenere.txt": cek_vigenere,
     "c3_xor.txt": cek_xor,
     "c4_railfence.txt": cek_auto,
+    "r1_small_e.txt": cek_rsa,
+    "r2_fermat.txt": cek_rsa,
+    "r3_wiener.txt": cek_rsa,
     "f1_komentar.png": cek_probe,
     "f2_zip_komen.zip": cek_probe,
     "f3_nyempil.png": cek_probe,
