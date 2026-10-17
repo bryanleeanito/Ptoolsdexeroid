@@ -72,6 +72,9 @@ python3 "kits/osint-kzldx/osint.py" --help
 
 ## Changelog
 
+- **2026-10-17** (`6906acc`) — tambah 3 drill RSA di `ctf-drills`
+  (small-e, Fermat, Wiener) + fix dekripsi Wiener di `rsa.py` — verify
+  15/15, decoder 21/21.
 - **2026-10-16** — tambah 3 kit: `security-protect` (defensive security), `extreme-efficiency` v2 (T14s G1 tuned: Ryzen 5 PRO 4650U 6C/12T, 16GB RAM), `firewall-bypass` (fragmentation, tunneling, evasion). Fix bug `classics.py` (NameError: decrypt) yang bikin ctf-crypto crash + ctf-drills fail. Fix false positive regex webshell-manager. Total 35 kit.
 - **2026-10-16** — tambah `sherlock-osint` (OSINT investigation: username/email/phone/domain + correlation engine + report generator). Total 33 kit.
 - **2026-10-16** — tambah 8 kit bypass & payload: `waf-bypass`, `cloudflare-bypass`, `elementor-bypass`, `ip-changer`, `ip-anti-lock`, `defense-counter`, `webshell-manager`, `payload-generator`. Total 32 kit.
